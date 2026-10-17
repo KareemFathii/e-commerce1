@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import {JwtModule} from '@nestjs/jwt';
 
 
 @Module({
@@ -14,7 +15,11 @@ import { UserModule } from './user/user.module';
       database: 'e-commerce-backend',
       autoLoadEntities: true,
       synchronize: true,
-    }),ConfigModule.forRoot(), UserModule],
+    }),ConfigModule.forRoot(), UserModule, JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET ,
+      signOptions: { expiresIn: '1h' }
+    })],
   controllers: [],
   providers: [],
   

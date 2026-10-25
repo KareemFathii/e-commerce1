@@ -3,6 +3,7 @@ import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from
 import { Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
 
+
 @Injectable()
 export class AuthGuard implements CanActivate {
     constructor(private jwtService: JwtService) {}
@@ -14,7 +15,10 @@ export class AuthGuard implements CanActivate {
     if (!token) {
       throw new UnauthorizedException();
     }
-    try{
+    if(this.jwtService.decode(token).exp < Date.now() / 1000){
+        throw new UnauthorizedException("Session ended please login again");
+    }
+    try{   
         const payload = this.jwtService.verifyAsync(token, { secret: process.env.JWT_SECRET });
         request['user'] = payload;
     }

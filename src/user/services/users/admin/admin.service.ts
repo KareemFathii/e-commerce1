@@ -1,16 +1,17 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateAdminDto } from '../../dto/admin/create-admin.dto';
-import { UpdateAdminDto } from '../../dto/admin/update-admin.dto';
+import { ConflictException, HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import { CreateAdminDto } from '../../../dto/admin/create-admin.dto';
+import { UpdateAdminDto } from '../../../dto/admin/update-admin.dto';
 import jwt from '@nestjs/jwt';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../../entities/user.entity';
+import { User } from '../../../entities/user.entity';
 import * as bcrypt from 'bcryptjs';
 
 
+
 @Injectable()
-export class UserService {
+export class AdminService {
   constructor(@InjectRepository(User)
     private usersRepository: Repository<User>) {}
 
@@ -27,8 +28,19 @@ export class UserService {
     return user; 
   }
 
-  async findAll(): Promise<User[]> {
-    return await this.usersRepository.find();
+  async findAll(query): Promise<User[]> {
+    const {page , limit ,order} = query
+    const skip = (page-1)* limit
+    if(Number.isNaN(+limit) || Number.isNaN(+page) || limit < 1 || page < 1) 
+      throw new HttpException('Invalid page or limit', 400); 
+    return await this.usersRepository.find({skip, take : limit , order:{ "email" :"DESC"} ,
+      select:{ id: true ,
+               name : true ,
+               email : true ,
+               role : true,
+               age : true,
+               phoneNumber : true
+      }});
   }
 
   async findOne(id: string): Promise<User> {

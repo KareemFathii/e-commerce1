@@ -1,16 +1,14 @@
 import { ConflictException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { SignupCreateDto } from '../../../dto/user/auth.dto';
+import { SignupCreateDto } from '../user/dto/user/auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../../../entities/user.entity';
+import { User } from '../user/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { MailerService } from '@nestjs-modules/mailer';
-import { resetPasswordHtml } from '../../../templates/resetPasswordHtmlMail';
+import { resetPasswordHtml } from '../user/templates/resetPasswordHtmlMail';
 import { Render } from '@nestjs/common';
-
-
-import { confirmedPasswordDto } from '../../../dto/user/auth.dto';
+import { confirmedPasswordDto } from '../user/dto/user/auth.dto';
 
 
 

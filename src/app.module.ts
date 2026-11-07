@@ -4,8 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { MailerModule } from '@nestjs-modules/mailer';
-
-
+import { CategoryModule } from './category/category.module';
+import { SubcategoryModule } from './subcategory/subcategory.module';
 @Module({
   imports: [TypeOrmModule.forRoot({
     type: 'postgres',
@@ -28,7 +28,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
         pass: process.env.USER_PASS,
       }
     }
-  })],
+  }), CategoryModule, SubcategoryModule],
   controllers: [],
   providers: [],
 })

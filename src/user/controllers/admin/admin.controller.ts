@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, Pars
 import { AdminService } from '../../services/users/admin/admin.service';
 import { CreateAdminDto } from '../../dto/admin/create-admin.dto';
 import { UpdateAdminDto } from '../../dto/admin/update-admin.dto';
-import { AuthGuard } from '../../guards/auth/auth.guard';
+import { AuthGuard } from '../../../auth/auth.guard';
 import { RolesGuard } from '../../guards/roles/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
 

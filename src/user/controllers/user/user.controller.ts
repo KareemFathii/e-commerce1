@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, ParseUUIDPipe, HttpStatus, HttpCode, UseGuards } from '@nestjs/common';
 import { UserService } from "../../services/users/user/user.service";
-import { AuthGuard } from '../../guards/auth/auth.guard';
+import { AuthGuard } from '../../../auth/auth.guard';
 import { RolesGuard } from "../../guards/roles/roles.guard";
 import { Roles } from "../../decorators/roles.decorator";
 import { UpdateUserDto } from '../../dto/user/auth.dto';
